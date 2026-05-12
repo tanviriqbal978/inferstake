@@ -176,7 +176,7 @@ export default function StakingApp() {
   // ── Refresh all user data ───────────────────────────────────
   const refresh = useCallback(async (addr: string) => {
     await Promise.all([loadDash(addr), loadNativeBal(addr), loadProtoStats()]);
-  }, [loadDash, loadTokenBal, loadProtoStats]);
+  }, [loadDash, loadNativeBal, loadProtoStats]);
 
   // ── Connect wallet ──────────────────────────────────────────
   const connect = async () => {
