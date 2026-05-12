@@ -237,10 +237,14 @@ export default function Home() {
             { label:"Current APY",     value: stats?.apy      ?? "—" },
           ].map(s => (
             <div key={s.label}>
-              <span style={{fontFamily:"var(--serif)",fontSize:"1.6rem",fontWeight:500,color:"var(--cream)",letterSpacing:"-0.02em",display:"block",
-                color: s.value === "—" ? "rgba(245,240,232,0.4)" : "var(--cream)"}}>
-                {s.value}
-              </span>
+              <span
+  style={{
+    fontFamily: "var(--serif)",
+    color: s.value === "—" ? "var(--accent)" : undefined,
+  }}
+>
+  {s.value}
+</span>
               <span style={{fontFamily:"var(--mono)",fontSize:"0.7rem",color:"rgba(245,240,232,0.6)",letterSpacing:"0.1em",textTransform:"uppercase",marginTop:2,display:"block"}}>
                 {s.label}
               </span>
