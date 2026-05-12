@@ -43,6 +43,7 @@ const ABI = [
   "function unstake(uint256 amount) external",
   "function claimRewards() external",
   "function requestAIAdvisory() external returns (uint256 requestId)",
+  "function apyBasisPoints() view returns (uint256)",
   // Events
   "event Staked(address indexed user, uint256 amount, uint256 timestamp)",
   "event Unstaked(address indexed user, uint256 amount, uint256 timestamp)",
@@ -153,18 +154,37 @@ export default function StakingApp() {
     } catch (e) { console.warn("loadProtoStats:", e); }
   }, [readContract]);
 
-  // ── Load user dashboard ─────────────────────────────────────
+  // ── Load user dashboard (uses individual getters for reliability) ──
   const loadDash = useCallback(async (addr: string) => {
     try {
       const c = readContract();
-      const [staked, rewards, apyBps, timeSecs, aiReqId] =
-        await c.getUserDashboard(addr);
+
+      // Try getUserDashboard first
+      try {
+        const [staked, rewards, apyBps, timeSecs, aiReqId] =
+          await c.getUserDashboard(addr);
+        setDash({
+          stakedAmount:    staked,
+          totalRewards:    rewards,
+          apyBps:          apyBps,
+          timeStakedSecs:  Number(timeSecs),
+          lastAiRequestId: aiReqId,
+        });
+        return;
+      } catch { /* fallback to individual getters */ }
+
+      // Fallback: use individual getters
+      const [staked, rewards, apyBps] = await Promise.all([
+        c.getStakedBalance(addr),
+        c.getRewards(addr),
+        c.apyBasisPoints(),
+      ]);
       setDash({
         stakedAmount:    staked,
         totalRewards:    rewards,
         apyBps:          apyBps,
-        timeStakedSecs:  Number(timeSecs),
-        lastAiRequestId: aiReqId,
+        timeStakedSecs:  0,
+        lastAiRequestId: 0n,
       });
     } catch (e) { console.warn("loadDash:", e); }
   }, [readContract]);
