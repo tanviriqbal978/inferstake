@@ -13,7 +13,6 @@
  *   Playfair Display, DM Mono, DM Sans  (Google Fonts)
  */
 
-"use client";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ethers } from "ethers";
 
@@ -97,6 +96,8 @@ interface AIMessage {
 
 // ─────────────────────────────────────────────────────────────
 export default function StakingApp() {
+  const [mounted, setMounted] = useState(false);
+
   // Wallet
   const [address,   setAddress]   = useState<string | null>(null);
   const [chainOk,   setChainOk]   = useState(false);
@@ -127,6 +128,9 @@ export default function StakingApp() {
 
   // Active tab
   const [tab, setTab] = useState<"stake" | "unstake">("stake");
+
+  // ── Mount guard (prevents SSR/window errors) ────────────────
+  useEffect(() => { setMounted(true); }, []);
 
   // ── Read-only provider (no wallet) ─────────────────────────
   const readProvider = useCallback(() =>
@@ -399,6 +403,8 @@ export default function StakingApp() {
     labels[status] ?? labels.idle;
 
   // ════════════════════════════════════════════════════════════
+  if (!mounted) return <div style={{ background: "#F5F0E8", minHeight: "100vh" }} />;
+
   return (
     <>
       <style>{`
