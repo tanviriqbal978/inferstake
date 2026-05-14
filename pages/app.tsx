@@ -328,8 +328,12 @@ Advisory: ${rec}`,
         .app-nav-inner { width:100%; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
         .app-nav-links { display:flex; align-items:center; justify-content:flex-end; gap:1rem; flex-wrap:wrap; }
         .app-nav-links > * { min-width:0; }
-        .app-nav-links span, .app-nav-links button { white-space:nowrap; }
-        .app-main-grid { width:100%; max-width:100%; }
+        .app-nav-links span, .app-nav-links button { white-space:nowrap; }        .app-nav-pill { font-family:monospace; font-size:0.7rem; color:#2D6A4F; background:#D4E6DC; padding:4px 10px; border-radius:20px; display:flex; align-items:center; gap:5px; white-space:nowrap; }
+        .app-nav-button { border:none; border-radius:2px; cursor:pointer; white-space:nowrap; letter-spacing:0.04em; display:inline-flex; align-items:center; justify-content:center; }
+        .app-nav-button.primary { background:#2D6A4F; color:#F5F0E8; padding:8px 20px; font-size:0.875rem; font-weight:500; }
+        .app-nav-button.secondary { background:#FDECEA; color:#C0392B; border:1px solid #C0392B; padding:7px 14px; font-size:0.75rem; }
+        .app-nav-button.disconnect { background:transparent; color:#4A4A3A; border:1px solid #E0D8C4; padding:7px 14px; font-size:0.75rem; }
+        .app-nav-address { font-family:monospace; font-size:0.72rem; color:#4A4A3A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }        .app-main-grid { width:100%; max-width:100%; }
         .app-stats-grid { width:100%; max-width:100%; }
         .app-stats-grid > div { min-width:0; }
         .app-dashboard-grid { width:100%; max-width:100%; }
@@ -367,35 +371,35 @@ Advisory: ${rec}`,
 
       {/* NAV */}
       <nav className="app-nav" style={{position:"sticky",top:0,zIndex:50,background:"rgba(245,240,232,0.93)",backdropFilter:"blur(14px)",borderBottom:"1px solid #E0D8C4",padding:"0 2rem",height:64,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-        <div className="app-nav-inner" style={{maxWidth:1180,margin:"0 auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <div className="app-nav-inner" style={{maxWidth:1180,margin:"0 auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:"1rem"}}>
           <a href="/" style={{display:"flex",alignItems:"center",gap:10}}>
             <img src={LOGO_SRC} alt="InferStake" style={{height:36,width:36,objectFit:"contain"}}/>
             <span style={{fontFamily:"'Playfair Display',serif",fontSize:"1.05rem",fontWeight:600,color:"#1A1A14"}}>InferStake</span>
           </a>
-              <div className="app-nav-links" style={{display:"flex",alignItems:"center",gap:"1rem"}}>
-          {address && (
-            <span style={{fontFamily:"monospace",fontSize:"0.7rem",color:"#2D6A4F",background:"#D4E6DC",padding:"4px 10px",borderRadius:20,display:"flex",alignItems:"center",gap:5,whiteSpace:"nowrap"}}>
-              <span style={{width:5,height:5,borderRadius:"50%",background:"#2D6A4F",display:"inline-block",animation:"pulse 2s ease infinite"}}/>
-              Ritual Chain · 1979
-            </span>
-          )}
-          {!address ? (
-            <button onClick={connect} style={{background:"#2D6A4F",color:"#F5F0E8",padding:"8px 20px",border:"none",borderRadius:2,fontSize:"0.875rem",fontWeight:500,cursor:"pointer",letterSpacing:"0.04em",whiteSpace:"nowrap"}}>
-              Connect Wallet
-            </button>
-          ) : !chainOk ? (
-            <button onClick={() => switchChain()} style={{background:"#FDECEA",color:"#C0392B",padding:"7px 14px",border:"1px solid #C0392B",borderRadius:2,fontSize:"0.75rem",cursor:"pointer",whiteSpace:"nowrap"}}>
-              ⚠ Switch to Ritual Chain
-            </button>
-          ) : (
-            <>
-              <span style={{fontFamily:"monospace",fontSize:"0.72rem",color:"#4A4A3A",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{shortAddr(address)}</span>
-              <button onClick={disconnect} style={{background:"transparent",color="#4A4A3A",padding:"7px 14px",border:"1px solid #E0D8C4",borderRadius:2,fontSize:"0.75rem",cursor:"pointer",whiteSpace:"nowrap"}}>
-                Disconnect
+          <div className="app-nav-links">
+            {address && (
+              <span className="app-nav-pill">
+                <span style={{width:5,height:5,borderRadius:"50%",background:"#2D6A4F",display:"inline-block",animation:"pulse 2s ease infinite"}}/>
+                Ritual Chain · 1979
+              </span>
+            )}
+            {!address ? (
+              <button className="app-nav-button primary" onClick={connect}>
+                Connect Wallet
               </button>
-            </>
-          )}
-        </div>
+            ) : !chainOk ? (
+              <button className="app-nav-button secondary" onClick={() => switchChain()}>
+                ⚠ Switch to Ritual Chain
+              </button>
+            ) : (
+              <>
+                <span className="app-nav-address">{shortAddr(address)}</span>
+                <button className="app-nav-button disconnect" onClick={disconnect}>
+                  Disconnect
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </nav>
 
