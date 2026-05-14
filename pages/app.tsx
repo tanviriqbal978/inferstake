@@ -323,15 +323,52 @@ Advisory: ${rec}`,
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
         @keyframes blink{50%{opacity:0}}
         .spinner{width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);border-top-color:currentColor;animation:spin 0.7s linear infinite;display:inline-block}
+
+        .app-nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        .app-nav-inner { width:100%; }
+        .app-main-grid { width:100%; max-width:100%; }
+        .app-stats-grid { width:100%; max-width:100%; }
+        .app-stats-grid > div { min-width:0; }
+        .app-dashboard-grid { width:100%; max-width:100%; }
+        .app-dashboard-grid > div { min-width:0; }
+
+        @media (max-width: 940px) {
+          .app-nav { flex-wrap: wrap; justify-content: center; }
+          .app-nav-inner { flex-direction:column; align-items:center; justify-content:center; gap:0.75rem; height:auto; padding:1rem 1.5rem; }
+          .app-nav a, .app-nav button, .app-nav span { font-size: 0.9rem !important; }
+          .app-main-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+          .app-stats-grid { grid-template-columns: repeat(2,1fr) !important; gap: 1px !important; }
+          .app-stats-grid > div { padding: 1rem !important; }
+          .app-stats-grid > div > div:first-child { font-size: 0.55rem !important; }
+          .app-stats-grid > div > div:nth-child(2) { font-size: 1.2rem !important; }
+          .app-dashboard-grid { grid-template-columns: 1fr !important; gap: 1px !important; }
+          .app-dashboard-grid > div { padding: 1.25rem !important; }
+          .app-dashboard-grid > div > div:first-child { font-size: 0.55rem !important; }
+          .app-dashboard-grid > div > div:nth-child(2) { font-size: 1.4rem !important; }
+          .app-dashboard-grid > div > div:nth-child(3) { font-size: 0.6rem !important; }
+        }
+
+        @media (max-width: 640px) {
+          .app-main-grid { padding: 1.5rem 1rem 3rem !important; }
+          .app-stats-grid { grid-template-columns: 1fr !important; }
+          .app-stats-grid > div { padding: 0.875rem 1rem !important; }
+          .app-stats-grid > div > div:first-child { font-size: 0.5rem !important; }
+          .app-stats-grid > div > div:nth-child(2) { font-size: 1rem !important; }
+          .app-dashboard-grid > div { padding: 1rem !important; }
+          .app-dashboard-grid > div > div:first-child { font-size: 0.5rem !important; }
+          .app-dashboard-grid > div > div:nth-child(2) { font-size: 1.2rem !important; }
+          .app-dashboard-grid > div > div:nth-child(3) { font-size: 0.55rem !important; }
+        }
       `}</style>
 
       {/* NAV */}
-      <nav style={{position:"sticky",top:0,zIndex:50,background:"rgba(245,240,232,0.93)",backdropFilter:"blur(14px)",borderBottom:"1px solid #E0D8C4",padding:"0 2rem",height:64,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-        <a href="/" style={{display:"flex",alignItems:"center",gap:10}}>
-          <img src={LOGO_SRC} alt="InferStake" style={{height:36,width:36,objectFit:"contain"}}/>
-          <span style={{fontFamily:"'Playfair Display',serif",fontSize:"1.05rem",fontWeight:600,color:"#1A1A14"}}>InferStake</span>
-        </a>
-        <div style={{display:"flex",alignItems:"center",gap:"1rem"}}>
+      <nav className="app-nav" style={{position:"sticky",top:0,zIndex:50,background:"rgba(245,240,232,0.93)",backdropFilter:"blur(14px)",borderBottom:"1px solid #E0D8C4",padding:"0 2rem",height:64,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <div className="app-nav-inner" style={{maxWidth:1180,margin:"0 auto",width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          <a href="/" style={{display:"flex",alignItems:"center",gap:10}}>
+            <img src={LOGO_SRC} alt="InferStake" style={{height:36,width:36,objectFit:"contain"}}/>
+            <span style={{fontFamily:"'Playfair Display',serif",fontSize:"1.05rem",fontWeight:600,color:"#1A1A14"}}>InferStake</span>
+          </a>
+          <div style={{display:"flex",alignItems:"center",gap:"1rem"}}>
           {address && (
             <span style={{fontFamily:"monospace",fontSize:"0.7rem",color:"#2D6A4F",background:"#D4E6DC",padding:"4px 10px",borderRadius:20,display:"flex",alignItems:"center",gap:5}}>
               <span style={{width:5,height:5,borderRadius:"50%",background:"#2D6A4F",display:"inline-block",animation:"pulse 2s ease infinite"}}/>
@@ -355,12 +392,13 @@ Advisory: ${rec}`,
             </>
           )}
         </div>
+        </div>
       </nav>
 
-      <div style={{maxWidth:1180,margin:"0 auto",padding:"2.5rem 2rem 5rem",display:"grid",gridTemplateColumns:"1fr 360px",gap:"1.5rem"}}>
+      <div className="app-main-grid" style={{maxWidth:1180,margin:"0 auto",padding:"2.5rem 2rem 5rem",display:"grid",gridTemplateColumns:"1fr 360px",gap:"1.5rem"}}>
 
         {/* STATS ROW */}
-        <div style={{gridColumn:"1/-1",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:1,background:"#E0D8C4",border:"1px solid #E0D8C4"}}>
+        <div className="app-stats-grid" style={{gridColumn:"1/-1",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:1,background:"#E0D8C4",border:"1px solid #E0D8C4"}}>
           {[
             {label:"Total Staked",  value: fmt(totalStk)+" RITUAL"},
             {label:"Your Staked",   value: address ? fmt(staked)+" RITUAL" : "—"},
@@ -392,7 +430,7 @@ Advisory: ${rec}`,
               <div style={{fontFamily:"monospace",fontSize:"0.65rem",color:"#2D6A4F",letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:"0.75rem",display:"flex",alignItems:"center",gap:6}}>
                 <span style={{width:12,height:1,background:"#2D6A4F",display:"inline-block"}}/>Your Position
               </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:1,background:"#E0D8C4",border:"1px solid #E0D8C4"}}>
+              <div className="app-dashboard-grid" style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:1,background:"#E0D8C4",border:"1px solid #E0D8C4"}}>
                 {[
                   {label:"Staked Balance",  value:fmt(staked,4),      sub:"RITUAL"},
                   {label:"Accrued Rewards", value:fmt(rewards,6),     sub:"RITUAL · live", green:true},
