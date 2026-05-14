@@ -325,7 +325,10 @@ Advisory: ${rec}`,
         .spinner{width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);border-top-color:currentColor;animation:spin 0.7s linear infinite;display:inline-block}
 
         .app-nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-        .app-nav-inner { width:100%; }
+        .app-nav-inner { width:100%; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        .app-nav-links { display:flex; align-items:center; justify-content:flex-end; gap:1rem; flex-wrap:wrap; }
+        .app-nav-links > * { min-width:0; }
+        .app-nav-links span, .app-nav-links button { white-space:nowrap; }
         .app-main-grid { width:100%; max-width:100%; }
         .app-stats-grid { width:100%; max-width:100%; }
         .app-stats-grid > div { min-width:0; }
@@ -333,8 +336,9 @@ Advisory: ${rec}`,
         .app-dashboard-grid > div { min-width:0; }
 
         @media (max-width: 940px) {
-          .app-nav { flex-wrap: wrap; justify-content: center; position: static !important; }
-          .app-nav-inner { flex-direction:column; align-items:center; justify-content:center; gap:0.75rem; height:auto; padding:1rem 1.5rem; }
+          .app-nav { flex-wrap: wrap; justify-content: center; position: static !important; height: auto !important; padding: 1rem 1rem !important; }
+          .app-nav-inner { flex-direction:column; align-items:center; justify-content:center; gap:0.75rem; width:100%; max-width:100%; padding:0; }
+          .app-nav-links { width:100%; justify-content:center; gap:0.75rem; }
           .app-nav a, .app-nav button, .app-nav span { font-size: 0.9rem !important; }
           .app-main-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
           .app-stats-grid { grid-template-columns: repeat(2,1fr) !important; gap: 1px !important; }
@@ -368,25 +372,25 @@ Advisory: ${rec}`,
             <img src={LOGO_SRC} alt="InferStake" style={{height:36,width:36,objectFit:"contain"}}/>
             <span style={{fontFamily:"'Playfair Display',serif",fontSize:"1.05rem",fontWeight:600,color:"#1A1A14"}}>InferStake</span>
           </a>
-          <div style={{display:"flex",alignItems:"center",gap:"1rem"}}>
+              <div className="app-nav-links" style={{display:"flex",alignItems:"center",gap:"1rem"}}>
           {address && (
-            <span style={{fontFamily:"monospace",fontSize:"0.7rem",color:"#2D6A4F",background:"#D4E6DC",padding:"4px 10px",borderRadius:20,display:"flex",alignItems:"center",gap:5}}>
+            <span style={{fontFamily:"monospace",fontSize:"0.7rem",color:"#2D6A4F",background:"#D4E6DC",padding:"4px 10px",borderRadius:20,display:"flex",alignItems:"center",gap:5,whiteSpace:"nowrap"}}>
               <span style={{width:5,height:5,borderRadius:"50%",background:"#2D6A4F",display:"inline-block",animation:"pulse 2s ease infinite"}}/>
               Ritual Chain · 1979
             </span>
           )}
           {!address ? (
-            <button onClick={connect} style={{background:"#2D6A4F",color:"#F5F0E8",padding:"8px 20px",border:"none",borderRadius:2,fontSize:"0.875rem",fontWeight:500,cursor:"pointer",letterSpacing:"0.04em"}}>
+            <button onClick={connect} style={{background:"#2D6A4F",color:"#F5F0E8",padding:"8px 20px",border:"none",borderRadius:2,fontSize:"0.875rem",fontWeight:500,cursor:"pointer",letterSpacing:"0.04em",whiteSpace:"nowrap"}}>
               Connect Wallet
             </button>
           ) : !chainOk ? (
-            <button onClick={() => switchChain()} style={{background:"#FDECEA",color:"#C0392B",padding:"7px 14px",border:"1px solid #C0392B",borderRadius:2,fontSize:"0.75rem",cursor:"pointer"}}>
+            <button onClick={() => switchChain()} style={{background:"#FDECEA",color:"#C0392B",padding:"7px 14px",border:"1px solid #C0392B",borderRadius:2,fontSize:"0.75rem",cursor:"pointer",whiteSpace:"nowrap"}}>
               ⚠ Switch to Ritual Chain
             </button>
           ) : (
             <>
-              <span style={{fontFamily:"monospace",fontSize:"0.72rem",color:"#4A4A3A"}}>{shortAddr(address)}</span>
-              <button onClick={disconnect} style={{background:"transparent",color:"#4A4A3A",padding:"7px 14px",border:"1px solid #E0D8C4",borderRadius:2,fontSize:"0.75rem",cursor:"pointer"}}>
+              <span style={{fontFamily:"monospace",fontSize:"0.72rem",color:"#4A4A3A",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{shortAddr(address)}</span>
+              <button onClick={disconnect} style={{background:"transparent",color="#4A4A3A",padding:"7px 14px",border:"1px solid #E0D8C4",borderRadius:2,fontSize:"0.75rem",cursor:"pointer",whiteSpace:"nowrap"}}>
                 Disconnect
               </button>
             </>
