@@ -116,38 +116,16 @@ export default function Home() {
         @keyframes spin{to{transform:rotate(360deg)}}
         @keyframes rotatePath{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
       `}</style>
-      <style>{`
-        .site-nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-        .site-nav-inner { width:100%; }
-        .hero-grid, .ai-grid, .stats-grid, .steps-grid, .footer-grid, .how-grid { width:100%; max-width:100%; }
-        .stats-grid > div, .steps-grid > div, .footer-grid > div, .how-grid > div { min-width:0; }
-
-        @media (max-width: 940px) {
-          .site-nav { flex-wrap: wrap; justify-content: center; }
-          .site-nav-inner { flex-direction:column; align-items:center; justify-content:center; gap:0.75rem; height:auto; padding:1rem 1.5rem; }
-          .site-nav a { font-size: 0.9rem !important; }
-          .hero-grid, .ai-grid, .stats-grid, .steps-grid, .footer-grid, .how-grid { grid-template-columns: 1fr !important; }
-          .hero-grid, .ai-grid { gap: 2.5rem !important; }
-          .footer-grid { gap: 1.5rem !important; }
-          .stats-grid > div, .steps-grid > div, .footer-grid > div, .how-grid > div { width: 100% !important; }
-        }
-
-        @media (max-width: 640px) {
-          .hero-grid, .ai-grid { gap: 1.75rem !important; }
-          .stats-grid, .steps-grid, .footer-grid { gap: 1rem !important; }
-          .stats-grid > div, .steps-grid > div { padding: 1.25rem !important; }
-        }
-      `}</style>
 
       {/* ── NAV ───────────────────────────────────────────── */}
-      <nav className="site-nav" style={{
+      <nav style={{
         position:"fixed",top:0,left:0,right:0,zIndex:100,
         background:"rgba(245,240,232,0.92)",backdropFilter:"blur(14px)",
         borderBottom:"1px solid var(--cream-deep)",
         boxShadow: scrolled ? "0 2px 20px rgba(26,26,20,0.06)" : "none",
         transition:"box-shadow 0.3s",
       }}>
-        <div className="site-nav-inner" style={{maxWidth:1180,margin:"0 auto",padding:"0 2rem",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{maxWidth:1180,margin:"0 auto",padding:"0 2rem",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <a href="/" style={{display:"flex",alignItems:"center",gap:10}}>
             <img src={LOGO_SRC} alt="InferStake" style={{height:38,width:38,objectFit:"contain"}} />
             <span style={{fontFamily:"var(--serif)",fontSize:"1.1rem",fontWeight:600,color:"var(--ink)",letterSpacing:"-0.01em"}}>InferStake</span>
@@ -189,7 +167,7 @@ export default function Home() {
           <line x1="1080" y1="0" x2="1080" y2="900" stroke="#2D6A4F" strokeWidth="0.4" opacity="0.07"/>
         </svg>
 
-        <div className="hero-grid" style={{position:"relative",zIndex:2,maxWidth:1180,margin:"0 auto",padding:"0 2rem",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"center"}}>
+        <div style={{position:"relative",zIndex:2,maxWidth:1180,margin:"0 auto",padding:"0 2rem",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"center"}}>
           {/* Left */}
           <div>
             <div style={{animation:"fadeUp 0.5s ease 0s forwards",display:"flex",alignItems:"center",gap:8,fontFamily:"var(--mono)",fontSize:"0.75rem",color:"var(--green)",letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:"1.5rem"}}>
@@ -251,7 +229,7 @@ export default function Home() {
 
       {/* ── STATS BAR ─────────────────────────────────────── */}
       <div style={{background:"var(--green)",padding:"1.4rem 2rem",position:"relative",overflow:"hidden"}}>
-        <div className="stats-grid" style={{maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"2rem",textAlign:"center"}}>
+        <div style={{maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"2rem",textAlign:"center"}}>
           {[
             { label:"Total Staked",    value: stats?.staked   ?? "—" },
             { label:"Active Stakers",  value: stats?.stakers  ?? "—" },
@@ -278,7 +256,7 @@ export default function Home() {
       {/* ── HOW IT WORKS ──────────────────────────────────── */}
       <section style={{padding:"7rem 0"}}>
         <div style={{maxWidth:1180,margin:"0 auto",padding:"0 2rem"}}>
-          <div className="how-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"end",marginBottom:"5rem"}}>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"end",marginBottom:"5rem"}}>
             <div ref={el=>animRef(el,0)} style={animStyle(0)}>
               <div style={{fontFamily:"var(--mono)",fontSize:"0.7rem",color:"var(--green)",letterSpacing:"0.12em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:8,marginBottom:"1rem"}}>
                 <span style={{width:16,height:1,background:"var(--green)",display:"inline-block"}}/>Protocol
@@ -292,7 +270,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="steps-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:2,background:"var(--cream-deep)",border:"1px solid var(--cream-deep)"}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:2,background:"var(--cream-deep)",border:"1px solid var(--cream-deep)"}}>
             {[
               { num:"01/03", title:"Connect Wallet",  desc:"Link MetaMask to Ritual Chain (ID 1979). InferStake auto-prompts the network — one click and you're in." },
               { num:"02/03", title:"Stake RITUAL",    desc:"Send native RITUAL as msg.value. Yield accrues every second at the live APY rate, fully on-chain." },
@@ -313,7 +291,7 @@ export default function Home() {
       {/* ── AI ADVISOR ────────────────────────────────────── */}
       <section style={{background:"var(--ink)",color:"var(--cream)",padding:"7rem 0",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",top:"-40%",right:"-20%",width:600,height:600,borderRadius:"50%",background:"radial-gradient(ellipse,rgba(45,106,79,0.15) 0%,transparent 70%)",pointerEvents:"none"}}/>
-        <div className="ai-grid" style={{maxWidth:1180,margin:"0 auto",padding:"0 2rem",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"center",position:"relative",zIndex:1}}>
+        <div style={{maxWidth:1180,margin:"0 auto",padding:"0 2rem",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"center",position:"relative",zIndex:1}}>
           <div ref={el=>animRef(el,5)} style={animStyle(0)}>
             <div style={{fontFamily:"var(--mono)",fontSize:"0.7rem",color:"var(--green-light)",letterSpacing:"0.12em",textTransform:"uppercase",display:"flex",alignItems:"center",gap:8,marginBottom:"1rem"}}>
               <span style={{width:16,height:1,background:"var(--green-light)",display:"inline-block"}}/>Powered by Ritual Infernet
@@ -374,7 +352,7 @@ export default function Home() {
       {/* ── FOOTER ────────────────────────────────────────── */}
       <footer style={{background:"var(--ink)",color:"var(--cream)",padding:"4rem 0 2rem",borderTop:"1px solid rgba(255,255,255,0.05)"}}>
         <div style={{maxWidth:1180,margin:"0 auto",padding:"0 2rem"}}>
-          <div className="footer-grid" style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr",gap:"3rem",paddingBottom:"3rem",borderBottom:"1px solid rgba(245,240,232,0.1)",marginBottom:"2rem"}}>
+          <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr",gap:"3rem",paddingBottom:"3rem",borderBottom:"1px solid rgba(245,240,232,0.1)",marginBottom:"2rem"}}>
             <div>
               <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:"1rem"}}>
                 <img src={LOGO_SRC} alt="InferStake" style={{height:30,width:30,objectFit:"contain",opacity:0.9}}/>
