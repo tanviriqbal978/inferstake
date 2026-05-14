@@ -333,7 +333,7 @@ Advisory: ${rec}`,
         .app-dashboard-grid > div { min-width:0; }
 
         @media (max-width: 940px) {
-          .app-nav { flex-wrap: wrap; justify-content: center; }
+          .app-nav { flex-wrap: wrap; justify-content: center; position: static !important; }
           .app-nav-inner { flex-direction:column; align-items:center; justify-content:center; gap:0.75rem; height:auto; padding:1rem 1.5rem; }
           .app-nav a, .app-nav button, .app-nav span { font-size: 0.9rem !important; }
           .app-main-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
